@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:olx/shared/shared_theme/app_colors.dart';
+import 'package:olx/shared/shared_theme/app_fonts.dart';
+import 'package:olx/shared/shred_widget/category_widget.dart';
+import 'package:olx/shared/utils/app_assets.dart';
 
 
 class HomePageScreen extends StatefulWidget {
@@ -10,6 +13,18 @@ class HomePageScreen extends StatefulWidget {
 }
 
 class _HomePageScreenState extends State<HomePageScreen> {
+
+  Map<String, String> categories = {
+    'Animals': AppAssets.animalIcon,
+    'Bikes': AppAssets.bikeIcon,
+    'Business': AppAssets.businessIcon,
+    'Electronics': AppAssets.electronicsIcon,
+    'Fashion': AppAssets.fashionIcon,
+    'Furniture': AppAssets.furnitureIcon,
+    'Jobs': AppAssets.jobIcon,
+    'Kids': AppAssets.kidsIcons,
+    'Property': AppAssets.propertyIcon
+  };
 
   List images = [
     'https://images.pexels.com/photos/298842/pexels-photo-298842.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
@@ -43,7 +58,13 @@ class _HomePageScreenState extends State<HomePageScreen> {
       body: Container(
         child: ListView(
           children: [
-            buildBannersSection()
+            buildBannersSection(),
+            ListTile(
+              title: Text('Categories', style: AppFonts.primaryBlacTextStyle),
+              trailing: Text('See all', style: AppFonts.subGreyTextStyle),
+              onTap: () {}
+            ),
+            buildCategorySection(),
           ],
         ),
       ),
@@ -71,6 +92,23 @@ class _HomePageScreenState extends State<HomePageScreen> {
                   )
                 ),
               ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  buildCategorySection() {
+    return Column(
+      children: [
+        Container(
+          height: 65.0,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: [
+              for (String key in categories.keys)
+              CategoryWidget(categoryName: key, img: categories[key]!)
             ],
           ),
         ),

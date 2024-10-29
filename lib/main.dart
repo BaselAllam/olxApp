@@ -16,3 +16,18 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+// UI Design => https://www.behance.net/gallery/182489779/Dubizzle-App-Redesign?tracking_source=search_projects|dubizzle&l=31
+
+
+/*
+
+Today Agenda
+
+  ListView.builder & GridView Widget
+  BottomNavigationBar
+  Navigation push & pop
+
+
+*/

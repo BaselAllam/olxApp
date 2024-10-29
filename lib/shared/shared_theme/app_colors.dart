@@ -10,4 +10,5 @@ class AppColors {
   static Color greyThreeColor = Color(0xff696D70);
   static Color greyTwoColor = Color(0xffA4ACB2);
   static Color greyOneColor = Color(0xffF8F9FA);
+  static Color blackColor = Color(0xff181C14);
 }
