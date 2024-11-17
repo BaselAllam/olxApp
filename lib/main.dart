@@ -23,11 +23,8 @@ class MyApp extends StatelessWidget {
 
 /*
 
-Today Agenda
-
-  ListView.builder & GridView Widget
-  BottomNavigationBar
-  Navigation push & pop
+  Next Session
+    - Buttons & Fields & Dialogs ( Login, Register, ResetPassword, Sell Screen )
 
 
 */

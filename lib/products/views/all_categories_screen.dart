@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:olx/app_settings/views/home_page.dart';
+import 'package:olx/products/views/search_result_screen.dart';
 import 'package:olx/shared/shared_theme/app_colors.dart';
 import 'package:olx/shared/shared_theme/app_fonts.dart';
 import 'package:olx/shared/shred_widget/back_btn_widget.dart';
@@ -33,7 +34,9 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen> {
               leading: Image.asset(categories[key]!, height: 25, width: 30.0),
               title: Text(key, style: AppFonts.subBlacTextStyle),
               trailing: Icon(Icons.arrow_forward_ios, color: AppColors.blackColor, size: 20.0),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (_) => SearchResultScreen(screenTitle: key)));
+              },
             ),
           ]
         ),

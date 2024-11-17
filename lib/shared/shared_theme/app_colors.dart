@@ -11,5 +11,5 @@ class AppColors {
   static Color greyTwoColor = Color(0xffA4ACB2);
   static Color greyOneColor = Color(0xffF8F9FA);
   static Color blackColor = Color(0xff181C14);
-  static Color backGroundColor = Color(0xfff7f7f7);
+  static Color backGroundColor = Colors.grey.shade200;
 }

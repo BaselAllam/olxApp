@@ -17,7 +17,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       backgroundColor: AppColors.backGroundColor,
+      backgroundColor: AppColors.backGroundColor,
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: AppColors.backGroundColor,

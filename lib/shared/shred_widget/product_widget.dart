@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:olx/products/views/product_details_screen.dart';
 import 'package:olx/shared/shared_theme/app_colors.dart';
 import 'package:olx/shared/shared_theme/app_fonts.dart';
 import 'package:olx/shared/shred_widget/fav_button.dart';
@@ -17,7 +18,9 @@ class _ProductWidgetState extends State<ProductWidget> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (_) => ProductDetailsScreen()));
+      },
       child: Container(
         margin: EdgeInsets.all(10.0),
         padding: EdgeInsets.all(5.0),
