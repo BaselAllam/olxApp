@@ -27,7 +27,6 @@ class _WishlistScreenState extends State<WishlistScreen> {
       body: Container(
         child: Column(
           children: [
-            Align(alignment: Alignment.topLeft, child: Text('   Categories', style: AppFonts.primaryBlacTextStyle)),
             Container(
               height: 65.0,
               child: ListView(
@@ -40,12 +39,11 @@ class _WishlistScreenState extends State<WishlistScreen> {
                 ],
               ),
             ),
-            Container(
-              height: MediaQuery.of(context).size.height - 260,
+            Flexible(
               child: GridView(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: 0.62
+                  childAspectRatio: 0.69
                 ),
                 children: [
                   for (int i = 0; i < 15; i++)

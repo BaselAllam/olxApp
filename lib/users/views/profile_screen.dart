@@ -53,7 +53,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: AppColors.backGroundColor,
-        title: Text('My Wishlist', style: AppFonts.primaryBlacTextStyle),
+        title: Text('Profile', style: AppFonts.primaryBlacTextStyle),
         actions: [NotificationWidget()],
       ),
       body: Container(
@@ -92,6 +92,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ListTile(
               leading: Icon(Icons.logout, color: AppColors.orangeColor, size: 20.0),
               title: Text('Logout', style: AppFonts.subBlacTextStyle),
+              onTap: () {
+                showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      backgroundColor: AppColors.whiteColor,
+                      content: Text('Are you sure you want to Logout', style: AppFonts.primaryBlacTextStyle),
+                      actions: [
+                        TextButton(
+                          child: Text('No', style: AppFonts.subWhiteyTextStyle),
+                          style: TextButton.styleFrom(
+                            backgroundColor: AppColors.orangeColor,
+                            fixedSize: Size(0.0, 50.0),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                        TextButton(
+                          child: Text('Yes', style: AppFonts.subOrangeTextStyle),
+                          style: TextButton.styleFrom(
+                            backgroundColor: Colors.transparent,
+                            fixedSize: Size(0.0, 50.0),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))
+                          ),
+                          onPressed: () {},
+                        ),
+                      ],
+                    );
+                  }
+                );
+              },
             )
           ],
         ),

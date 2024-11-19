@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:olx/app_settings/views/bottom_nav_bar.dart';
+import 'package:olx/users/views/login_screen.dart';
 
 
 void main() => runApp(MyApp());
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: BottomNavBarScreen()
+      home: LoginScreen()
     );
   }
 }
@@ -24,7 +24,25 @@ class MyApp extends StatelessWidget {
 /*
 
   Next Session
-    - Buttons & Fields & Dialogs ( Login, Register, ResetPassword, Sell Screen )
+    - Packages & Libraries
+      - Splash Screen
+      - Launcher Icon
+      - SharedPreferences
+      - Device Camera
+      - Google Maps ( Geolocator, Flutter Google Map ) => just install
 
+  Next Session
+    - Integrate Google Map
+    - Use Google Map & Geolocator
+    - Integrate Firebase
+
+
+  Next 2 Session
+    - Intro to State Managment
+    - How to use State Managment
+
+  Next Session 
+    - Responsive Design
+    - Release App 
 
 */

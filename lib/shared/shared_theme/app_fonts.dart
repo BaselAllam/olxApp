@@ -11,4 +11,5 @@ class AppFonts {
   static TextStyle subGreyTextStyle = TextStyle(color: AppColors.greyThreeColor, fontSize: 15.0);
   static TextStyle subWhiteyTextStyle = TextStyle(color: AppColors.whiteColor, fontSize: 15.0);
   static TextStyle miniOrangeTextStyle = TextStyle(color: AppColors.orangeColor, fontSize: 10.0);
+  static TextStyle subOrangeTextStyle = TextStyle(color: AppColors.orangeColor, fontSize: 15.0);
 }

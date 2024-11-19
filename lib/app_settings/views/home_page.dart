@@ -84,7 +84,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
               for (String i in images)
               Container(
                 margin: EdgeInsets.all(10.0),
-                width: MediaQuery.of(context).size.width,
+                width: MediaQuery.of(context).size.width / 1.2,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15.0),
                   image: DecorationImage(
