@@ -7,6 +7,7 @@ import 'package:olx/shared/shred_widget/notification_widget.dart';
 import 'package:olx/users/views/edit_profile_screen.dart';
 import 'package:olx/users/views/payment_screen.dart';
 import 'package:olx/users/views/wallet_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class ProfileScreen extends StatefulWidget {
@@ -119,7 +120,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             fixedSize: Size(0.0, 50.0),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))
                           ),
-                          onPressed: () {},
+                          onPressed: () async {
+                            SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                            sharedPreferences.clear();
+                          },
                         ),
                       ],
                     );

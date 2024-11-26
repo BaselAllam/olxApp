@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:olx/shared/shared_theme/app_colors.dart';
 import 'package:olx/shared/shared_theme/app_fonts.dart';
 import 'package:olx/shared/shred_widget/notification_widget.dart';
-
-
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class SellScreen extends StatefulWidget {
   const SellScreen({super.key});
@@ -18,6 +18,8 @@ class _SellScreenState extends State<SellScreen> {
   TextEditingController adDecriptionController = TextEditingController();
   TextEditingController adPriceController = TextEditingController();
   String selectedCategory = 'Select Category';
+
+  File? pickedImage;
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +38,18 @@ class _SellScreenState extends State<SellScreen> {
         child: ListView(
           children: [
             Container(
-              margin: EdgeInsets.only(bottom: 10.0),
+              margin: EdgeInsets.only(bottom: 10.0),  
               height: MediaQuery.of(context).size.height / 4,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.0),
-                color: AppColors.whiteColor
+                color: AppColors.whiteColor,
+                image: pickedImage == null ? DecorationImage(
+                  image: NetworkImage('https://images.pexels.com/photos/102155/pexels-photo-102155.jpeg?auto=compress&cs=tinysrgb&w=600'),
+                  fit: BoxFit.fill
+                ) : DecorationImage(
+                  image: FileImage(pickedImage!),
+                  fit: BoxFit.fill
+                )
               ),
               alignment: Alignment.center,
               child: Column(
@@ -50,7 +59,9 @@ class _SellScreenState extends State<SellScreen> {
                     icon: Icon(Icons.add),
                     color: AppColors.orangeColor,
                     iconSize: 40.0,
-                    onPressed: () {},
+                    onPressed: () async {
+                      pickImg(ImageSource.camera);
+                    },
                   ),
                   Text('Add Image', style: AppFonts.subOrangeTextStyle),
                   Text('upload up to 20 images', style: AppFonts.miniOrangeTextStyle),
@@ -191,5 +202,12 @@ class _SellScreenState extends State<SellScreen> {
         ),
       ),
     );
+  }
+
+  pickImg(ImageSource imageSource) async {
+    var img = await ImagePicker().pickImage(source: imageSource);
+    setState(() {
+      pickedImage = File(img!.path);
+    });
   }
 }

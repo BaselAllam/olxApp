@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:olx/products/views/account_seller_screen.dart';
 import 'package:olx/shared/shared_theme/app_colors.dart';
 import 'package:olx/shared/shared_theme/app_fonts.dart';
@@ -15,6 +17,17 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+
+  LatLng defaultPosition = LatLng(-0.936, -98.0539);
+
+  bool isMapLoading = true;
+
+  @override
+  void initState() {
+    getUserLocation();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -141,10 +154,40 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   ),
                 ],
               ),
-            )
+            ),
+            Container(
+              height: 250.0,
+              margin: EdgeInsets.all(10.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                color: AppColors.whiteColor
+              ),
+              padding: EdgeInsets.all(10.0),
+              child: isMapLoading ? Center(child: CircularProgressIndicator()) : GoogleMap(
+                initialCameraPosition: CameraPosition(
+                  target: defaultPosition,
+                  zoom: 12
+                ),
+                myLocationEnabled: true,
+                myLocationButtonEnabled: true,
+              ),
+            ),
           ],
         ),
       ),
     );
+  }
+
+  getUserLocation() async {
+    isMapLoading = true;
+    setState(() {});
+    LocationPermission locationPermission = await Geolocator.checkPermission();
+    if (locationPermission == LocationPermission.denied) {
+      await Geolocator.requestPermission();
+    }
+    Position currentPosition = await Geolocator.getCurrentPosition();
+    defaultPosition = LatLng(currentPosition.latitude, currentPosition.longitude);
+    isMapLoading = false;
+    setState(() {});
   }
 }

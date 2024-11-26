@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:olx/users/views/login_screen.dart';
+import 'package:olx/app_settings/views/splash_screen.dart';
 
 
 void main() => runApp(MyApp());
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginScreen()
+      home: SplashScreen()
     );
   }
 }
@@ -24,20 +24,7 @@ class MyApp extends StatelessWidget {
 /*
 
   Next Session
-    - Packages & Libraries
-      - Splash Screen
-      - Launcher Icon
-      - SharedPreferences
-      - Device Camera
-      - Google Maps ( Geolocator, Flutter Google Map ) => just install
-
-  Next Session
-    - Integrate Google Map
-    - Use Google Map & Geolocator
     - Integrate Firebase
-
-
-  Next 2 Session
     - Intro to State Managment
     - How to use State Managment
 

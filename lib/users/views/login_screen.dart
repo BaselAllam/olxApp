@@ -4,7 +4,7 @@ import 'package:olx/shared/shared_theme/app_colors.dart';
 import 'package:olx/shared/shared_theme/app_fonts.dart';
 import 'package:olx/shared/shred_widget/snack_widget.dart';
 import 'package:olx/users/views/register_screen.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -105,10 +105,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 fixedSize: Size(0.0, 50.0),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))
               ),
-              onPressed: () {
+              onPressed: () async {
                 if (emailController.text.isEmpty || passwordController.text.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(snackBar('Email & Password Required', Colors.red));
                 } else {
+                  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                  sharedPreferences.setBool('isLoggedIn', true);
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => BottomNavBarScreen()));
                 }
               },
