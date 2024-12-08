@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "140800090573",
+    "project_id": "olxproject-3348f",
+    "storage_bucket": "olxproject-3348f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:140800090573:android:2c076f55132c3c75c5e484",
+        "android_client_info": {
+          "package_name": "com.example.olx"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPT43HZVDmGiNqVmkFGdUBX77CEuY6yZk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -12,4 +12,5 @@ class AppAssets {
   static String jobIcon = 'assets/job.png';
   static String kidsIcons = 'assets/kids.png';
   static String propertyIcon = 'assets/property.png';
+  static String url = 'https://olxproject-3348f-default-rtdb.firebaseio.com/';
 }

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:olx/products/logic/product_cubit.dart';
+import 'package:olx/products/logic/product_state.dart';
 import 'package:olx/shared/shared_theme/app_colors.dart';
 import 'package:olx/shared/shared_theme/app_fonts.dart';
 import 'package:olx/shared/shred_widget/notification_widget.dart';
@@ -189,14 +192,24 @@ class _SellScreenState extends State<SellScreen> {
               ),
             ),
             SizedBox(height: 50.0),
-            TextButton(
-              child: Text('Sell Now', style: AppFonts.subWhiteyTextStyle),
-              style: TextButton.styleFrom(
-                backgroundColor: AppColors.orangeColor,
-                fixedSize: Size(0.0, 50.0),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))
-              ),
-              onPressed: () {},
+            BlocBuilder<ProductCubit, ProductState>(
+              builder: (context, state) {
+                if (state is CreateProductLoadingState) {
+                  return Center(child: CircularProgressIndicator());
+                } else {
+                  return TextButton(
+                    child: Text('Sell Now', style: AppFonts.subWhiteyTextStyle),
+                    style: TextButton.styleFrom(
+                      backgroundColor: AppColors.orangeColor,
+                      fixedSize: Size(0.0, 50.0),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))
+                    ),
+                    onPressed: () {
+                      BlocProvider.of<ProductCubit>(context).createProduct();
+                    },
+                  );
+                }
+              },
             ),
           ],
         ),
