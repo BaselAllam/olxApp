@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:olx/products/logic/product_cubit.dart';
+import 'package:olx/products/logic/product_model.dart';
 import 'package:olx/shared/shared_theme/app_colors.dart';
 
 
 
 class FavButton extends StatefulWidget {
-  const FavButton({super.key});
+  ProductModel productModel;
+  FavButton({required this.productModel});
 
   @override
   State<FavButton> createState() => _FavButtonState();
 }
 
 class _FavButtonState extends State<FavButton> {
-
-  bool isSelected = false;
-
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: Icon(isSelected ? Icons.favorite : Icons.favorite_border),
-      color: isSelected ? AppColors.orangeColor : AppColors.greyFourColor,
+      icon: Icon(widget.productModel.isFav ? Icons.favorite : Icons.favorite_border),
+      color: widget.productModel.isFav ? AppColors.orangeColor : AppColors.greyFourColor,
       iconSize: 20.0,
       onPressed: () {
-        isSelected = !isSelected;
-        setState(() {});
+        BlocProvider.of<ProductCubit>(context).handleFav(widget.productModel);
       },
     );
   }

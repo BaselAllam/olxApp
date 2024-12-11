@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:olx/products/logic/product_cubit.dart';
+import 'package:olx/products/logic/product_state.dart';
 import 'package:olx/shared/shared_theme/app_colors.dart';
 import 'package:olx/shared/shared_theme/app_fonts.dart';
 import 'package:olx/shared/shred_widget/notification_widget.dart';
@@ -40,21 +43,23 @@ class _WishlistScreenState extends State<WishlistScreen> {
               ),
             ),
             Flexible(
-              child: GridView(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.69
-                ),
-                children: [
-                  for (int i = 0; i < 15; i++)
-                  ProductWidget(productModel: {
-                      'productImg': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDIBxtZomfSTeVFkJqWN0itc6Q2FSomDWYnw&s',
-                      'productTitle': 'Apple Macboook Pro',
-                      'productPrice': '60000',
-                      'sellerAddress': 'Madienty, EG',
-                      'createdAt': '20-May'
-                    })
-                ],
+              child: BlocBuilder<ProductCubit, ProductState>(
+                builder: (context, state) {
+                  if (BlocProvider.of<ProductCubit>(context).favProducts.isEmpty) {
+                    return Center(child: Text('no Fav Products available', style: AppFonts.primaryBlacTextStyle));
+                  } else {
+                    return GridView(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 0.69
+                      ),
+                      children: [
+                        for (int i = 0; i < BlocProvider.of<ProductCubit>(context).favProducts.length; i++)
+                        ProductWidget(productModel: BlocProvider.of<ProductCubit>(context).favProducts[i])
+                      ],
+                    );
+                  }
+                },
               ),
             ),
           ],

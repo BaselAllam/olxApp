@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:olx/app_settings/views/home_page.dart';
 import 'package:olx/products/logic/product_cubit.dart';
 import 'package:olx/products/logic/product_state.dart';
 import 'package:olx/shared/shared_theme/app_colors.dart';
@@ -7,6 +8,8 @@ import 'package:olx/shared/shared_theme/app_fonts.dart';
 import 'package:olx/shared/shred_widget/notification_widget.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+
+import 'package:olx/shared/shred_widget/snack_widget.dart';
 
 class SellScreen extends StatefulWidget {
   const SellScreen({super.key});
@@ -83,26 +86,11 @@ class _SellScreenState extends State<SellScreen> {
                 },
                 itemBuilder: (BuildContext context) {
                   return <PopupMenuEntry<String>>[
+                    for (String i in categories.keys)
                     PopupMenuItem(
-                      child: Text('Electronics', style: AppFonts.subBlacTextStyle),
-                      value: 'Electronics',
-                    ),
-                    PopupMenuItem(
-                      child: Text('Pets', style: AppFonts.subBlacTextStyle),
-                      value: 'Pets',
-                    ),
-                    PopupMenuItem(
-                      child: Text('Bikes', style: AppFonts.subBlacTextStyle),
-                      value: 'Bikes',
-                    ),
-                    PopupMenuItem(
-                      child: Text('Fashion', style: AppFonts.subBlacTextStyle),
-                      value: 'Fashion',
-                    ),
-                    PopupMenuItem(
-                      child: Text('Property', style: AppFonts.subBlacTextStyle),
-                      value: 'Property',
-                    ),
+                      child: Text(i, style: AppFonts.subBlacTextStyle),
+                      value: i,
+                    )
                   ];
                 },
               ),
@@ -192,24 +180,42 @@ class _SellScreenState extends State<SellScreen> {
               ),
             ),
             SizedBox(height: 50.0),
-            BlocBuilder<ProductCubit, ProductState>(
-              builder: (context, state) {
-                if (state is CreateProductLoadingState) {
-                  return Center(child: CircularProgressIndicator());
-                } else {
-                  return TextButton(
-                    child: Text('Sell Now', style: AppFonts.subWhiteyTextStyle),
-                    style: TextButton.styleFrom(
-                      backgroundColor: AppColors.orangeColor,
-                      fixedSize: Size(0.0, 50.0),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))
-                    ),
-                    onPressed: () {
-                      BlocProvider.of<ProductCubit>(context).createProduct();
-                    },
-                  );
+            BlocListener<ProductCubit, ProductState>(
+              listener: (context, state) {
+                if (state is CreateProductSuccessState) {
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar('Created Success', Colors.green));
+                } else if (state is CreateProductFailedState) {
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar('Created Failed', Colors.red));
                 }
               },
+              child: BlocBuilder<ProductCubit, ProductState>(
+                builder: (context, state) {
+                  if (state is CreateProductLoadingState) {
+                    return Center(child: CircularProgressIndicator());
+                  } else {
+                    return TextButton(
+                      child: Text('Sell Now', style: AppFonts.subWhiteyTextStyle),
+                      style: TextButton.styleFrom(
+                        backgroundColor: AppColors.orangeColor,
+                        fixedSize: Size(0.0, 50.0),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))
+                      ),
+                      onPressed: () {
+                        if (adTitleController.text.isEmpty || adDecriptionController.text.isEmpty || adPriceController.text.isEmpty || selectedCategory == 'Select Category') {
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar('Some Fields Empty', Colors.red));
+                        } else {
+                          BlocProvider.of<ProductCubit>(context).createProduct(
+                            selectedCategory,
+                            adTitleController.text,
+                            adDecriptionController.text,
+                            num.parse(adPriceController.text)
+                          );
+                        }
+                      },
+                    );
+                  }
+                },
+              ),
             ),
           ],
         ),

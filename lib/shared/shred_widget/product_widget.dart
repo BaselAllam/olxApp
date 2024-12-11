@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:olx/products/logic/product_model.dart';
 import 'package:olx/products/views/product_details_screen.dart';
 import 'package:olx/shared/shared_theme/app_colors.dart';
 import 'package:olx/shared/shared_theme/app_fonts.dart';
@@ -7,7 +8,7 @@ import 'package:olx/shared/shred_widget/fav_button.dart';
 
 
 class ProductWidget extends StatefulWidget {
-  Map<String, dynamic> productModel;
+  ProductModel productModel;
   ProductWidget({required this.productModel});
 
   @override
@@ -38,7 +39,7 @@ class _ProductWidgetState extends State<ProductWidget> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.0),
                 image: DecorationImage(
-                  image: NetworkImage(widget.productModel['productImg']),
+                  image: NetworkImage(widget.productModel.productImg),
                   fit: BoxFit.fill
                 ),
               ),
@@ -53,14 +54,14 @@ class _ProductWidgetState extends State<ProductWidget> {
                 child: Text('New', style: AppFonts.subWhiteyTextStyle),
               ),
             ),
-            Text('  ${widget.productModel['productTitle']}', style: AppFonts.subBlacTextStyle),
-            Text('  ${widget.productModel['productPrice']} EGP', style: AppFonts.primaryBlacTextStyle),
-            Text('  ${widget.productModel['sellerAddress']}', style: AppFonts.subGreyTextStyle),
+            Text('  ${widget.productModel.productName}', style: AppFonts.subBlacTextStyle),
+            Text('  ${widget.productModel.productPrice} EGP', style: AppFonts.primaryBlacTextStyle),
+            Text('  Address}', style: AppFonts.subGreyTextStyle),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(widget.productModel['createdAt'], style: AppFonts.subGreyTextStyle),
-                FavButton()
+                Text('20-OCT', style: AppFonts.subGreyTextStyle),
+                FavButton(productModel: widget.productModel)
               ],
             )
           ],

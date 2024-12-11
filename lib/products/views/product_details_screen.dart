@@ -68,7 +68,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('Apple Macbook pro', style: AppFonts.primaryBlacTextStyle),
-                  FavButton()
+                  // FavButton()
                 ],
               ),
             ),

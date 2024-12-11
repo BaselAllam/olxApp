@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:olx/products/logic/product_cubit.dart';
+import 'package:olx/products/logic/product_state.dart';
 import 'package:olx/shared/shared_theme/app_colors.dart';
 import 'package:olx/shared/shared_theme/app_fonts.dart';
 import 'package:olx/shared/shred_widget/back_btn_widget.dart';
@@ -25,21 +28,27 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
         leading: CustomBackBtn()
       ),
       body: Container(
-        child: GridView(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 0.62
-          ),
-          children: [
-            for (int i = 0; i < 15; i++)
-            ProductWidget(productModel: {
-                'productImg': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDIBxtZomfSTeVFkJqWN0itc6Q2FSomDWYnw&s',
-                'productTitle': 'Apple Macboook Pro',
-                'productPrice': '60000',
-                'sellerAddress': 'Madienty, EG',
-                'createdAt': '20-May'
-              })
-          ],
+        child: BlocBuilder<ProductCubit, ProductState>(
+          builder: (context, state) {
+             if (state is GetProductsLoadingState) {
+              return Center(child: CircularProgressIndicator());
+            } else if (state is  GetProductsErrorState) {
+              return Center(child: Text('Some thing went wrong', style: AppFonts.primaryBlacTextStyle));
+            } else if (BlocProvider.of<ProductCubit>(context).allProducts.isEmpty) {
+              return Center(child: Text('There is no products now', style: AppFonts.primaryBlacTextStyle));
+            } else {
+              return GridView(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.62
+                ),
+                children: [
+                  for (int i = 0; i < BlocProvider.of<ProductCubit>(context).allProducts.length; i++)
+                  ProductWidget(productModel:BlocProvider.of<ProductCubit>(context).allProducts[i])
+                ],
+              );
+            }
+          },
         ),
       ),
     );

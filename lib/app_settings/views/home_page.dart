@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:olx/products/logic/product_cubit.dart';
+import 'package:olx/products/logic/product_state.dart';
 import 'package:olx/products/views/all_categories_screen.dart';
 import 'package:olx/products/views/search_result_screen.dart';
 import 'package:olx/shared/shared_theme/app_colors.dart';
@@ -29,13 +32,6 @@ class HomePageScreen extends StatefulWidget {
 }
 
 class _HomePageScreenState extends State<HomePageScreen> {
-
-  List images = [
-    'https://images.pexels.com/photos/298842/pexels-photo-298842.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    'https://images.pexels.com/photos/253096/pexels-photo-253096.jpeg?auto=compress&cs=tinysrgb&w=600',
-    'https://images.pexels.com/photos/4158/apple-iphone-smartphone-desk.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,30 +69,42 @@ class _HomePageScreenState extends State<HomePageScreen> {
   }
 
   buildBannersSection() {
-    return Column(
-      children: [
-        Container(
-          margin: EdgeInsets.only(top: 20.0),
-          height: 200.0,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
+    return BlocBuilder<ProductCubit, ProductState>(
+      builder: (context, state) {
+        if (state is GetHeadersLoadingState) {
+          return Center(child: CircularProgressIndicator());
+        } else if (state is GetHeadersErrorState) {
+          return Center(child: Text('Some thing went wrong', style: AppFonts.primaryBlacTextStyle));
+        } else if (BlocProvider.of<ProductCubit>(context).headers.isEmpty) {
+          return Center(child: Text('There is no banners now', style: AppFonts.primaryBlacTextStyle));
+        } else {
+          return Column(
             children: [
-              for (String i in images)
               Container(
-                margin: EdgeInsets.all(10.0),
-                width: MediaQuery.of(context).size.width / 1.2,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15.0),
-                  image: DecorationImage(
-                    image: NetworkImage(i),
-                    fit: BoxFit.fill
-                  )
+                margin: EdgeInsets.only(top: 20.0),
+                height: 200.0,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    for (String i in BlocProvider.of<ProductCubit>(context).headers)
+                    Container(
+                      margin: EdgeInsets.all(10.0),
+                      width: MediaQuery.of(context).size.width / 1.2,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.0),
+                        image: DecorationImage(
+                          image: NetworkImage(i),
+                          fit: BoxFit.fill
+                        )
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
-          ),
-        ),
-      ],
+          );
+        }
+      },
     );
   }
 
@@ -118,25 +126,31 @@ class _HomePageScreenState extends State<HomePageScreen> {
   }
 
   buildProductsSection() {
-    return Column(
-      children: [
-        Container(
-          height: 320.0,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: 5,
-            itemBuilder: (context, index) {
-              return ProductWidget(productModel: {
-                'productImg': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDIBxtZomfSTeVFkJqWN0itc6Q2FSomDWYnw&s',
-                'productTitle': 'Apple Macboook Pro',
-                'productPrice': '60000',
-                'sellerAddress': 'Madienty, EG',
-                'createdAt': '20-May'
-              });
-            },
-          ),
-        ),
-      ],
+    return BlocBuilder<ProductCubit, ProductState>(
+      builder: (context, state) {
+        if (state is GetProductsLoadingState) {
+          return Center(child: CircularProgressIndicator());
+        } else if (state is  GetProductsErrorState) {
+          return Center(child: Text('Some thing went wrong', style: AppFonts.primaryBlacTextStyle));
+        } else if (BlocProvider.of<ProductCubit>(context).allProducts.isEmpty) {
+          return Center(child: Text('There is no products now', style: AppFonts.primaryBlacTextStyle));
+        } else {
+          return Column(
+            children: [
+              Container(
+                height: 320.0,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: BlocProvider.of<ProductCubit>(context).allProducts.length,
+                  itemBuilder: (context, index) {
+                    return ProductWidget(productModel: BlocProvider.of<ProductCubit>(context).allProducts[index]);
+                  },
+                ),
+              ),
+            ],
+          );
+        }
+      },
     );
   }
 }

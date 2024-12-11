@@ -135,14 +135,14 @@ class _AccountSellerScreenState extends State<AccountSellerScreen> {
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               children: [
-                for (int i = 0; i < 15; i++)
-                ProductWidget(productModel: {
-                    'productImg': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDIBxtZomfSTeVFkJqWN0itc6Q2FSomDWYnw&s',
-                    'productTitle': 'Apple Macboook Pro',
-                    'productPrice': '60000',
-                    'sellerAddress': 'Madienty, EG',
-                    'createdAt': '20-May'
-                  })
+                // for (int i = 0; i < 15; i++)
+                // ProductWidget(productModel: {
+                //     'productImg': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDIBxtZomfSTeVFkJqWN0itc6Q2FSomDWYnw&s',
+                //     'productTitle': 'Apple Macboook Pro',
+                //     'productPrice': '60000',
+                //     'sellerAddress': 'Madienty, EG',
+                //     'createdAt': '20-May'
+                //   })
               ],
             ),
           ],
