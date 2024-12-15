@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:olx/app_settings/views/bottom_nav_bar.dart';
-import 'package:olx/products/logic/product_cubit.dart';
+import 'package:olx/shared/utils/init_data.dart';
 import 'package:olx/users/views/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -39,8 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (isLoggedIn == null || isLoggedIn == false) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => LoginScreen()));
     } else {
-      await BlocProvider.of<ProductCubit>(context).getProducts();
-      await BlocProvider.of<ProductCubit>(context).getHeaders();
+      await initDataMethod(context);
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => BottomNavBarScreen()));
     }
     

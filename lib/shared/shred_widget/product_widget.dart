@@ -20,7 +20,7 @@ class _ProductWidgetState extends State<ProductWidget> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (_) => ProductDetailsScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (_) => ProductDetailsScreen(productModel: widget.productModel)));
       },
       child: Container(
         margin: EdgeInsets.all(10.0),

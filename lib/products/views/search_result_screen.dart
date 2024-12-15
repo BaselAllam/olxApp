@@ -10,7 +10,8 @@ import 'package:olx/shared/shred_widget/product_widget.dart';
 
 class SearchResultScreen extends StatefulWidget {
   final String screenTitle;
-  const SearchResultScreen({required this.screenTitle});
+  final bool isAllProducts;
+  const SearchResultScreen({required this.screenTitle, this.isAllProducts = true});
 
   @override
   State<SearchResultScreen> createState() => _SearchResultScreenState();
@@ -28,7 +29,7 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
         leading: CustomBackBtn()
       ),
       body: Container(
-        child: BlocBuilder<ProductCubit, ProductState>(
+        child: widget.isAllProducts ? BlocBuilder<ProductCubit, ProductState>(
           builder: (context, state) {
              if (state is GetProductsLoadingState) {
               return Center(child: CircularProgressIndicator());
@@ -45,6 +46,25 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                 children: [
                   for (int i = 0; i < BlocProvider.of<ProductCubit>(context).allProducts.length; i++)
                   ProductWidget(productModel:BlocProvider.of<ProductCubit>(context).allProducts[i])
+                ],
+              );
+            }
+          },
+        ) : BlocBuilder<ProductCubit, ProductState>(
+          builder: (context, state) {
+             if (state is FilterProductLoadingState) {
+              return Center(child: CircularProgressIndicator());
+            } else if (BlocProvider.of<ProductCubit>(context).filteredProducts.isEmpty) {
+              return Center(child: Text('There is no products for this category', style: AppFonts.primaryBlacTextStyle));
+            } else {
+              return GridView(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.62
+                ),
+                children: [
+                  for (int i = 0; i < BlocProvider.of<ProductCubit>(context).filteredProducts.length; i++)
+                  ProductWidget(productModel:BlocProvider.of<ProductCubit>(context).filteredProducts[i])
                 ],
               );
             }

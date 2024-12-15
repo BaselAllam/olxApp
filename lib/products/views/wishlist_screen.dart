@@ -51,7 +51,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                     return GridView(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        childAspectRatio: 0.69
+                        childAspectRatio: responsiveGridView()
                       ),
                       children: [
                         for (int i = 0; i < BlocProvider.of<ProductCubit>(context).favProducts.length; i++)
@@ -66,6 +66,14 @@ class _WishlistScreenState extends State<WishlistScreen> {
         ),
       ),
     );
+  }
+
+  double responsiveGridView() {
+    double screenHeight = MediaQuery.of(context).size.height;
+    if (screenHeight <= 685) {
+      return 0.65;
+    }
+    return 0.69;
   }
 }
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:olx/app_settings/views/home_page.dart';
+import 'package:olx/products/logic/product_cubit.dart';
 import 'package:olx/products/views/search_result_screen.dart';
 import 'package:olx/shared/shared_theme/app_colors.dart';
 import 'package:olx/shared/shared_theme/app_fonts.dart';
@@ -35,7 +37,8 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen> {
               title: Text(key, style: AppFonts.subBlacTextStyle),
               trailing: Icon(Icons.arrow_forward_ios, color: AppColors.blackColor, size: 20.0),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (_) => SearchResultScreen(screenTitle: key)));
+                BlocProvider.of<ProductCubit>(context).filterCategory(key);
+                Navigator.push(context, MaterialPageRoute(builder: (_) => SearchResultScreen(screenTitle: key, isAllProducts: false)));
               },
             ),
           ]

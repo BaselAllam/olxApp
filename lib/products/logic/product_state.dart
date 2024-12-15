@@ -24,3 +24,7 @@ class GetHeadersSuccessState extends ProductState {}
 class GetHeadersErrorState extends ProductState {}
 
 class HandleFavState extends ProductState {}
+
+class FilterProductLoadingState extends ProductState {}
+
+class FilterProductFinishState extends ProductState {}

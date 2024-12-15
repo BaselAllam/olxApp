@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:olx/products/logic/product_cubit.dart';
+import 'package:olx/products/logic/product_model.dart';
+import 'package:olx/products/logic/product_state.dart';
 import 'package:olx/products/views/account_seller_screen.dart';
 import 'package:olx/shared/shared_theme/app_colors.dart';
 import 'package:olx/shared/shared_theme/app_fonts.dart';
@@ -10,7 +14,8 @@ import 'package:olx/shared/shred_widget/fav_button.dart';
 
 
 class ProductDetailsScreen extends StatefulWidget {
-  const ProductDetailsScreen({super.key});
+  ProductModel productModel;
+  ProductDetailsScreen({required this.productModel});
 
   @override
   State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
@@ -47,14 +52,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                  for (int i = 0; i < 3; i++)
+                  // for (int i = 0; i < 3; i++)
                   Container(
                     margin: EdgeInsets.all(10.0),
                     width: MediaQuery.of(context).size.width / 1.1,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20.0),
                       image: DecorationImage(
-                        image: NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDIBxtZomfSTeVFkJqWN0itc6Q2FSomDWYnw&s'),
+                        image: NetworkImage(widget.productModel.productImg),
                         fit: BoxFit.fill
                       )
                     ),
@@ -67,14 +72,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Apple Macbook pro', style: AppFonts.primaryBlacTextStyle),
-                  // FavButton()
+                  Text(widget.productModel.productName, style: AppFonts.primaryBlacTextStyle),
+                  BlocBuilder<ProductCubit, ProductState>(
+                    builder: (context, state) => FavButton(productModel: widget.productModel)
+                  )
                 ],
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-              child: Text('Apple Macbook pro laptop new like used Apple Macbook pro laptop new like used Apple Macbook pro laptop new like usedApple Macbook pro laptop new like used Apple Macbook pro laptop new like used', style: AppFonts.subGreyTextStyle),
+              child: Text(widget.productModel.productDescription, style: AppFonts.subGreyTextStyle),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
@@ -85,7 +92,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('EGP 65.000', style: AppFonts.primaryBlacTextStyle),
+                  Text('EGP ${widget.productModel.productPrice}', style: AppFonts.primaryBlacTextStyle),
                   TextButton(
                     child: Row(
                       children: [

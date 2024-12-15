@@ -7,6 +7,7 @@ class ProductModel {
   String productDescription;
   num productPrice;
   String productImg;
+  String categoryName;
   bool isFav;
 
   ProductModel({
@@ -15,6 +16,7 @@ class ProductModel {
     required this.productDescription,
     required this.productPrice,
     required this.productImg,
+    required this.categoryName,
     this.isFav = false
   });
 }

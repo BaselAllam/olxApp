@@ -53,7 +53,8 @@ class ProductCubit extends Cubit<ProductState> {
               productName: value['productName'],
               productDescription: value['productDescription'],
               productPrice: value['productPrice'],
-              productImg: value['proudctImg']
+              productImg: value['proudctImg'],
+              categoryName: value['categoryId']
             )
           );
         });
@@ -95,9 +96,16 @@ class ProductCubit extends Cubit<ProductState> {
       http.Response response = await http.post(Uri.parse('${AppAssets.url}/products.json'), body: json.encode(data));
       if (response.statusCode == 200) {
         var jsonBody = json.decode(response.body);
-        _userProducts.add(
-          ProductModel(productId: jsonBody['name'], productName: title, productDescription: description, productPrice: price, productImg: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDIBxtZomfSTeVFkJqWN0itc6Q2FSomDWYnw&s')
+        ProductModel newProduct = ProductModel(
+          productId: jsonBody['name'],
+          productName: title,
+          productDescription: description,
+          productPrice: price,
+          productImg: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDIBxtZomfSTeVFkJqWN0itc6Q2FSomDWYnw&s',
+          categoryName: category
         );
+        _userProducts.add(newProduct);
+        _allProducts.add(newProduct);
         emit(CreateProductSuccessState());
       } else {
         emit(CreateProductFailedState());
@@ -107,9 +115,19 @@ class ProductCubit extends Cubit<ProductState> {
     }
   }
 
-  deleteProduct() {}
+  List<ProductModel> _filteredProducts = [];
+  List<ProductModel> get filteredProducts => _filteredProducts;
 
-  editProduct() {}
+  void filterCategory(String selectedCategory) {
+    emit(FilterProductLoadingState());
+    _filteredProducts.clear();
+    for (ProductModel productModel in _allProducts) {
+      if (productModel.categoryName == selectedCategory) {
+        _filteredProducts.add(productModel);
+      }
+    }
+    emit(FilterProductFinishState());
+  }
 }
 
 

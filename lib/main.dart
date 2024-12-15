@@ -21,15 +21,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
-
-
-/*
-
-  Next Session 
-    - Filter Category Function
-    - Responsive Design
-    - Release App 
-
-*/

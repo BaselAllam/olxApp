@@ -3,6 +3,7 @@ import 'package:olx/app_settings/views/bottom_nav_bar.dart';
 import 'package:olx/shared/shared_theme/app_colors.dart';
 import 'package:olx/shared/shared_theme/app_fonts.dart';
 import 'package:olx/shared/shred_widget/snack_widget.dart';
+import 'package:olx/shared/utils/init_data.dart';
 import 'package:olx/users/views/register_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -111,6 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 } else {
                   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
                   sharedPreferences.setBool('isLoggedIn', true);
+                  await initDataMethod(context);
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => BottomNavBarScreen()));
                 }
               },

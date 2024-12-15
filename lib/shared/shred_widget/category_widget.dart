@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:olx/products/logic/product_cubit.dart';
+import 'package:olx/products/views/search_result_screen.dart';
 import 'package:olx/shared/shared_theme/app_colors.dart';
 import 'package:olx/shared/shared_theme/app_fonts.dart';
 
@@ -14,9 +17,6 @@ class CategoryWidget extends StatefulWidget {
 }
 
 class _CategoryWidgetState extends State<CategoryWidget> {
-
-  bool isSelected = false;
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -28,22 +28,22 @@ class _CategoryWidgetState extends State<CategoryWidget> {
             margin: EdgeInsets.all(10.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: isSelected ? AppColors.orangeColor : AppColors.whiteColor
+              color: AppColors.whiteColor
             ),
             alignment: Alignment.center,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Image.asset(widget.img, height: 25, width: 30.0),
-                Text('  ${widget.categoryName}', style: isSelected ? AppFonts.subWhiteyTextStyle : AppFonts.subGreyTextStyle)
+                Text('  ${widget.categoryName}', style: AppFonts.subGreyTextStyle)
               ],
             ),
           ),
         ],
       ),
       onTap: () {
-        isSelected = !isSelected;
-        setState(() {});
+        BlocProvider.of<ProductCubit>(context).filterCategory(widget.categoryName);
+        Navigator.push(context, MaterialPageRoute(builder: (_) => SearchResultScreen(screenTitle: widget.categoryName, isAllProducts: false)));
       },
     );
   }
